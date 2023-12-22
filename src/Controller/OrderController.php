@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/order')]
 class OrderController extends AbstractController
@@ -71,7 +71,7 @@ class OrderController extends AbstractController
     #[Route('/{id}', name: 'app_order_delete', methods: ['POST'])]
     public function delete(Request $request, Order $order, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $order->getId(), $request->request->get('_token'))) {
             $entityManager->remove($order);
             $entityManager->flush();
         }
