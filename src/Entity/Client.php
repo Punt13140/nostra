@@ -21,7 +21,7 @@ class Client
     #[ORM\Column(length: 64)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 64)]
+    #[ORM\Column(length: 64, unique: true)]
     private ?string $nationaleId = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

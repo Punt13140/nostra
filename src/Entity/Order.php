@@ -36,7 +36,7 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?int $refId = null;
 
-    #[ORM\OneToMany(mappedBy: 'refOrder', targetEntity: WeightDetail::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'refOrder', targetEntity: WeightDetail::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $weightDetails;
 
     #[ORM\Column(nullable: true)]
@@ -45,6 +45,7 @@ class Order
     public function __construct()
     {
         $this->weightDetails = new ArrayCollection();
+        $this->observation = '';
     }
 
     public function getId(): ?int

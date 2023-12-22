@@ -22,14 +22,14 @@ class Address
     #[ORM\Column(length: 64)]
     private ?string $city = null;
 
-    #[ORM\Column]
-    private ?int $postalCode = null;
-
     #[ORM\Column(length: 64)]
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $additionalInfo = null;
+
+    #[ORM\Column(length: 16)]
+    private ?string $postalCode = null;
 
     public function getId(): ?int
     {
@@ -72,18 +72,6 @@ class Address
         return $this;
     }
 
-    public function getPostalCode(): ?int
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(int $postalCode): static
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
     public function getCountry(): ?string
     {
         return $this->country;
@@ -104,6 +92,18 @@ class Address
     public function setAdditionalInfo(?string $additionalInfo): static
     {
         $this->additionalInfo = $additionalInfo;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): static
+    {
+        $this->postalCode = $postalCode;
 
         return $this;
     }

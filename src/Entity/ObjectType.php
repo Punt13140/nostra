@@ -16,6 +16,11 @@ class ObjectType
     #[ORM\Column(length: 64)]
     private ?string $libelle = null;
 
+    public function __construct(?string $libelle)
+    {
+        $this->libelle = $libelle;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
