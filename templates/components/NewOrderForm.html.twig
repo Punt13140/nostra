@@ -1,0 +1,130 @@
+<div {{ attributes }}>
+    <form
+            data-action="live#action"
+            data-action-name="prevent|saveOrder"
+    >
+        {#        <div class="row align-items-center"> #}
+        {#            <div class="col-2"> #}
+        {#                <label for="order-orderedAt">Date:</label> #}
+        {#            </div> #}
+        {#            <div class="col-3"> #}
+        {#                <input #}
+        {#                        type="date" #}
+        {#                        data-model="orderedAt" #}
+        {#                        class="form-control {{ _errors.has('orderedAt') ? 'is-invalid' }}" #}
+        {#                        id="order-orderedAt" #}
+        {#                > #}
+        {#                {% if _errors.has('orderedAt') %} #}
+        {#                    <div class="invalid-feedback"> #}
+        {#                        {{ _errors.get('orderedAt') }} #}
+        {#                    </div> #}
+        {#                {% endif %} #}
+        {#            </div> #}
+        {#        </div> #}
+
+        <div class="row align-items-center">
+            <div class="col-2">
+                <label for="order-designation">Designation:</label>
+            </div>
+            <div class="col-3">
+                <input
+                        type="text"
+                        data-model="designation"
+                        class="form-control {{ _errors.has('designation') ? 'is-invalid' }}"
+                        id="order-designation"
+                >
+                {% if _errors.has('designation') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('designation') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-2">
+                <label for="order-itemCount">Count:</label>
+            </div>
+            <div class="col-3">
+                <input
+                        type="number"
+                        data-model="itemCount"
+                        class="form-control {{ _errors.has('itemCount') ? 'is-invalid' }}"
+                        id="order-itemCount"
+                >
+                {% if _errors.has('itemCount') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('itemCount') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-2">
+                <label for="order-itemCount">refId:</label>
+            </div>
+            <div class="col-3">
+                <input
+                        type="number"
+                        {#                        data-model="order_refId" #}
+                        class="form-control {{ _errors.has('order_refId') ? 'is-invalid' }}"
+                        id="order-itemCount"
+                >
+                {% if _errors.has('order_refId') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('order_refId') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="row align-items-center mt-3">
+            <div class="col-2">
+                <label for="order-client">Client:</label>
+            </div>
+            <div class="col-3">
+                <select
+                        data-model="client"
+                        id="order-client"
+                        class="form-control {{ _errors.has('client') ? 'is-invalid' }}"
+                >
+                    <option value="">Choose a client</option>
+                    {% for clientOption in clients %}
+                        <option value="{{ clientOption.id }}" {{ this.isCurrentClient(clientOption) ? 'selected' }}>{{ clientOption.fullName }}</option>
+                    {% endfor %}
+                </select>
+                {% if _errors.has('client') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('client') }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-auto">
+                <div class="form-text">
+                    <a
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#new-client-modal"
+                    >+ Add client
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Save Product</button>
+        </div>
+    </form>
+
+    {% component BootstrapModal with {id: 'new-client-modal'} %}
+        {% block modal_header %}
+            <h5>Add a client</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        {% endblock %}
+        {% block modal_body %}
+            <twig:NewClientForm/>
+        {% endblock %}
+    {% endcomponent %}
+</div>

@@ -45,6 +45,7 @@ class Order
     public function __construct()
     {
         $this->weightDetails = new ArrayCollection();
+        $this->orderedAt = new \DateTimeImmutable();
         $this->observation = '';
     }
 

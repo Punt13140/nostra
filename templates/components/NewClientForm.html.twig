@@ -1,0 +1,170 @@
+<div{{ attributes }}>
+    <form
+            data-action="live#action"
+            data-action-name="prevent|saveClient"
+    >
+
+        <div class="row align-items-center mb-2">
+            <div class="col-2">
+                <label for="client-nom">Nom</label>
+            </div>
+            <div class="col">
+                <input
+                        type="text"
+                        data-model="nom"
+                        class="form-control {{ _errors.has('nom') ? 'is-invalid' }}"
+                        id="client-nom"
+                >
+                {% if _errors.has('nom') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('nom') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-2">
+            <div class="col-2">
+                <label for="client-prenom">Prenom</label>
+            </div>
+            <div class="col">
+                <input
+                        type="text"
+                        data-model="prenom"
+                        class="form-control {{ _errors.has('prenom') ? 'is-invalid' }}"
+                        id="client-prenom"
+                >
+                {% if _errors.has('prenom') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('prenom') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-2">
+            <div class="col-2">
+                <label for="client-nationaleId">nationaleId</label>
+            </div>
+            <div class="col">
+                <input
+                        type="text"
+                        data-model="nationaleId"
+                        class="form-control {{ _errors.has('nationaleId') ? 'is-invalid' }}"
+                        id="client-nationaleId"
+                >
+                {% if _errors.has('nationaleId') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('nationaleId') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-2">
+                        <label for="client-addressLine1">addressLine1</label>
+                    </div>
+                    <div class="col">
+                        <input
+                                type="text"
+                                data-model="addressLine1"
+                                class="form-control {{ _errors.has('addressLine1') ? 'is-invalid' }}"
+                                id="client-addressLine1"
+                        >
+                        {% if _errors.has('addressLine1') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('addressLine1') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-2">
+                        <label for="client-addressLine2">addressLine2</label>
+                    </div>
+                    <div class="col">
+                        <input
+                                type="text"
+                                data-model="addressLine2"
+                                class="form-control {{ _errors.has('addressLine2') ? 'is-invalid' }}"
+                                id="client-addressLine2"
+                        >
+                        {% if _errors.has('addressLine2') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('addressLine2') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-2">
+                        <label for="client-city">city</label>
+                    </div>
+                    <div class="col">
+                        <input
+                                type="text"
+                                data-model="city"
+                                class="form-control {{ _errors.has('city') ? 'is-invalid' }}"
+                                id="client-city"
+                        >
+                        {% if _errors.has('city') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('city') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-2">
+                        <label for="client-country">country</label>
+                    </div>
+                    <div class="col">
+                        <input
+                                type="text"
+                                data-model="country"
+                                class="form-control {{ _errors.has('country') ? 'is-invalid' }}"
+                                id="client-country"
+                        >
+                        {% if _errors.has('country') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('country') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-2">
+                        <label for="client-additionalInfo">additionalInfo</label>
+                    </div>
+                    <div class="col">
+                        <input
+                                type="text"
+                                data-model="additionalInfo"
+                                class="form-control {{ _errors.has('additionalInfo') ? 'is-invalid' }}"
+                                id="client-additionalInfo"
+                        >
+                        {% if _errors.has('additionalInfo') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('additionalInfo') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Save Client</button>
+        </div>
+    </form>
+</div>

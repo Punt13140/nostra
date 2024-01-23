@@ -1,4 +1,5 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<twig:NewOrderForm
+        designation="{{ order.designation ?? '' }}"
+        client="{{ order.orderedBy }}"
+        itemCount="{{ order.itemCount ?? 1 }}"
+/>
