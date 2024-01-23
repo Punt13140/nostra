@@ -27,12 +27,13 @@
                 <label for="order-designation">Designation:</label>
             </div>
             <div class="col-3">
-                <input
-                        type="text"
-                        data-model="designation"
-                        class="form-control {{ _errors.has('designation') ? 'is-invalid' }}"
+                <textarea
                         id="order-designation"
-                >
+                        data-model="designation"
+                        name="designation"
+                        rows="5"
+                        cols="33">
+                </textarea>
                 {% if _errors.has('designation') %}
                     <div class="invalid-feedback">
                         {{ _errors.get('designation') }}
