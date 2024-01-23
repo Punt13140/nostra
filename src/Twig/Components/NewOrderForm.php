@@ -36,8 +36,11 @@ final class NewOrderForm extends AbstractController
 //    public \DateTime $orderedAt;
 
     #[LiveProp(writable: true)]
+    public ?int $refId;
+
+    #[LiveProp(writable: true)]
     #[NotBlank]
-    public ?Client $client = null;
+    public ?Client $client;
 
     #[LiveProp(writable: true)]
     #[NotBlank]
@@ -70,6 +73,7 @@ final class NewOrderForm extends AbstractController
     {
         $this->validate();
         $order = new Order();
+        $order->setRefId($this->refId);
         $order->setOrderedAt(\DateTimeImmutable::createFromMutable(new \DateTime()));
         $order->setOrderedBy($this->client);
         $order->setDesignation($this->designation);

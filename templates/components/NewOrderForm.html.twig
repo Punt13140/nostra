@@ -62,18 +62,18 @@
 
         <div class="row align-items-center">
             <div class="col-2">
-                <label for="order-itemCount">refId:</label>
+                <label for="order-refId">refId:</label>
             </div>
             <div class="col-3">
                 <input
                         type="number"
-                        {#                        data-model="order_refId" #}
-                        class="form-control {{ _errors.has('order_refId') ? 'is-invalid' }}"
-                        id="order-itemCount"
+                        data-model="refId"
+                        class="form-control {{ _errors.has('refId') ? 'is-invalid' }}"
+                        id="order-refId"
                 >
-                {% if _errors.has('order_refId') %}
+                {% if _errors.has('refId') %}
                     <div class="invalid-feedback">
-                        {{ _errors.get('order_refId') }}
+                        {{ _errors.get('refId') }}
                     </div>
                 {% endif %}
             </div>
