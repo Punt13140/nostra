@@ -1,6 +1,7 @@
 <twig:NewOrderForm
         refId="{{ order.refId }}"
-        designation="{{ order.designation ?? '' }}"
+        {#        orderedAt="{{ order.orderedAt }}" #}
         client="{{ order.orderedBy }}"
+        designation="{{ order.designation ?? '' }}"
         itemCount="{{ order.itemCount ?? 1 }}"
 />

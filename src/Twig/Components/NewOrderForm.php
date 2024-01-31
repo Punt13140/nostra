@@ -28,7 +28,6 @@ final class NewOrderForm extends AbstractController
         private readonly ClientRepository $clientRepository,
     )
     {
-//        $this->orderedAt = new \DateTime();
     }
 
 //    #[LiveProp(writable: true)]

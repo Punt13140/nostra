@@ -21,7 +21,7 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $orderedBy = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $orderedAt = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -45,7 +45,6 @@ class Order
     public function __construct()
     {
         $this->weightDetails = new ArrayCollection();
-        $this->orderedAt = new \DateTimeImmutable();
         $this->observation = '';
     }
 
@@ -62,18 +61,6 @@ class Order
     public function setOrderedBy(?Client $orderedBy): static
     {
         $this->orderedBy = $orderedBy;
-
-        return $this;
-    }
-
-    public function getOrderedAt(): ?\DateTimeImmutable
-    {
-        return $this->orderedAt;
-    }
-
-    public function setOrderedAt(\DateTimeImmutable $orderedAt): static
-    {
-        $this->orderedAt = $orderedAt;
 
         return $this;
     }
@@ -164,6 +151,18 @@ class Order
     public function setExitedAt(?\DateTimeImmutable $exitedAt): static
     {
         $this->exitedAt = $exitedAt;
+
+        return $this;
+    }
+
+    public function getOrderedAt(): ?\DateTimeImmutable
+    {
+        return $this->orderedAt;
+    }
+
+    public function setOrderedAt(\DateTimeImmutable $orderedAt): static
+    {
+        $this->orderedAt = $orderedAt;
 
         return $this;
     }
