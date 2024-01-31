@@ -46,6 +46,7 @@ class AppFixtures extends Fixture
                 $order = new Order();
                 $order->setOrderedBy($client);
                 $order->setOrderedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 year')));
+                $order->setExitedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 year')));
                 $order->setDesignation('Boucle + bague + ...');
                 $order->setItemCount($faker->numberBetween(1, 10));
 

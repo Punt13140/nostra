@@ -14,11 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/')]
 class OrderController extends AbstractController
 {
-    #[Route('/', name: 'app_order_index', methods: ['GET'])]
-    public function index(OrderRepository $orderRepository): Response
+    #[Route('/', name: 'app_order_index', defaults: ['page' => 1], methods: ['GET'])]
+    #[Route('/order/page/{page<[1-9]\d{0,8}>}', name: 'app_order_paginated', defaults: ['page' => 1], methods: ['GET'])]
+    public function index(OrderRepository $orderRepository, int $page): Response
     {
         return $this->render('order/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'paginator' => $orderRepository->findLatest($page),
         ]);
     }
 
