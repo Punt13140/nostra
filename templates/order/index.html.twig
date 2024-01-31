@@ -16,12 +16,12 @@
             <th class="text-center">Client</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Date de sortie</th>
-            <th class="text-center">actions</th>
+            <th class="text-center">Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for order in paginator.results %}
-            <tr>
+            <tr class="align-middle">
                 <td class="text-center">{{ order.orderedAt ? order.orderedAt|date('d/m/Y') : '' }}</td>
                 <td class="text-center">{{ order.orderedBy.fullName }}</td>
                 <td class="text-center">{{ order.itemCount }}</td>

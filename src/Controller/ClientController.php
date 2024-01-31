@@ -14,11 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/client')]
 class ClientController extends AbstractController
 {
-    #[Route('/', name: 'app_client_index', methods: ['GET'])]
-    public function index(ClientRepository $clientRepository): Response
+    #[Route('/', name: 'app_client_index', defaults: ['page' => 1], methods: ['GET'])]
+    #[Route('/page/{page<[1-9]\d{0,8}>}', name: 'app_client_paginated', defaults: ['page' => 1], methods: ['GET'])]
+    public function index(ClientRepository $clientRepository, int $page): Response
     {
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+            'paginator' => $clientRepository->findLatest($page),
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Client;
+use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,4 +46,11 @@ class ClientRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findLatest(int $page = 1): Paginator
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->orderBy('c.id', 'DESC');
+
+        return (new Paginator($qb))->paginate($page);
+    }
 }
