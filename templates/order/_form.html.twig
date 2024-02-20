@@ -1,6 +1,8 @@
 <twig:NewOrderForm
-        refId="{{ order.refId }}"
-        client="{{ order.orderedBy }}"
-        designation="{{ order.designation ?? '' }}"
-        itemCount="{{ order.itemCount ?? 1 }}"
+        order="{{ order }}"
+        orderedBy="{{ order.orderedBy }}"
+        weightDetailFabricants="{{ weightDetailFabricants }}"
+        weightDetailOccasions="{{ weightDetailOccasions }}"
+        weightDetailOthers="{{ weightDetailAutres }}"
+        weightDetailTiers="{{ weightDetailTiers }}"
 />

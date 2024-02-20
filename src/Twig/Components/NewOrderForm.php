@@ -2,9 +2,12 @@
 
 namespace App\Twig\Components;
 
+use App\Config\Type;
 use App\Entity\Client;
 use App\Entity\Order;
+use App\Entity\WeightDetail;
 use App\Repository\ClientRepository;
+use App\Repository\ObjectTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,24 +33,24 @@ final class NewOrderForm extends AbstractController
     {
     }
 
-//    #[LiveProp(writable: true)]
-//    #[NotBlank]
-//    public \DateTime $orderedAt;
-
-    #[LiveProp(writable: true)]
-    public ?int $refId;
+    #[LiveProp(writable: ['refId', 'designation', 'itemCount'])]
+    public ?Order $order;
 
     #[LiveProp(writable: true)]
     #[NotBlank]
-    public ?Client $client;
+    public ?Client $orderedBy;
 
-    #[LiveProp(writable: true)]
-    #[NotBlank]
-    public ?string $designation;
+    #[LiveProp(writable: ['gold', 'platinum', 'silver',])]
+    public ?WeightDetail $weightDetailOccasions;
 
-    #[LiveProp(writable: true)]
-    #[NotBlank]
-    public ?int $itemCount;
+    #[LiveProp(writable: ['gold', 'platinum', 'silver',])]
+    public ?WeightDetail $weightDetailFabricants;
+
+    #[LiveProp(writable: ['gold', 'platinum', 'silver',])]
+    public ?WeightDetail $weightDetailOthers;
+
+    #[LiveProp(writable: ['gold', 'platinum', 'silver',])]
+    public ?WeightDetail $weightDetailTiers;
 
 
     #[ExposeInTemplate]
@@ -59,26 +62,44 @@ final class NewOrderForm extends AbstractController
     #[LiveListener('client:created')]
     public function onCategoryCreated(#[LiveArg] Client $client): void
     {
-        $this->client = $client;
+        $this->orderedBy = $client;
     }
 
     public function isCurrentClient(Client $client): bool
     {
-        return $this->client && $this->client === $client;
+        return $this->orderedBy && $this->orderedBy === $client;
     }
 
     #[LiveAction]
-    public function saveOrder(EntityManagerInterface $entityManager): Response
+    public function saveOrder(EntityManagerInterface $entityManager, ObjectTypeRepository $objectTypeRepository): Response
     {
         $this->validate();
-        $order = new Order();
-        $order->setRefId($this->refId);
-        $order->setOrderedAt(\DateTimeImmutable::createFromMutable(new \DateTime()));
-        $order->setOrderedBy($this->client);
-        $order->setDesignation($this->designation);
-        $order->setItemCount($this->itemCount);
 
-        $entityManager->persist($order);
+        $this->order->setOrderedAt(\DateTimeImmutable::createFromMutable(new \DateTime()));
+        $this->order->setOrderedBy($this->orderedBy);
+
+        if ($this->weightDetailOccasions->getType() == null) {
+            $this->weightDetailOccasions->setType($objectTypeRepository->find(Type::occasions));
+        }
+
+        if ($this->weightDetailTiers->getType() == null) {
+            $this->weightDetailTiers->setType($objectTypeRepository->find(Type::tiers));
+        }
+
+        if ($this->weightDetailOthers->getType() == null) {
+            $this->weightDetailOthers->setType($objectTypeRepository->find(Type::autres));
+        }
+
+        if ($this->weightDetailFabricants->getType() == null) {
+            $this->weightDetailFabricants->setType($objectTypeRepository->find(Type::fabricants));
+        }
+
+        $this->order->addWeightDetail($this->weightDetailOccasions);
+        $this->order->addWeightDetail($this->weightDetailTiers);
+        $this->order->addWeightDetail($this->weightDetailOthers);
+        $this->order->addWeightDetail($this->weightDetailFabricants);
+
+        $entityManager->persist($this->order);
         $entityManager->flush();
 
         $this->addFlash('live_demo_success', 'Product created! Add another one!');

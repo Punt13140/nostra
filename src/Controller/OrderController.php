@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Config\Type;
 use App\Entity\Order;
+use App\Entity\WeightDetail;
 use App\Form\OrderType;
+use App\Repository\ObjectTypeRepository;
 use App\Repository\OrderRepository;
+use App\Repository\WeightDetailRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,22 +28,20 @@ class OrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ObjectTypeRepository $objectTypeRepository): Response
     {
         $order = new Order();
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($order);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $weightDetailFabricants = new WeightDetail();
+        $weightDetailOccasions = new WeightDetail();
+        $weightDetailOthers = new WeightDetail();
+        $weightDetailTiers = new WeightDetail();
 
         return $this->render('order/new.html.twig', [
             'order' => $order,
-            'form' => $form,
+            'weightDetailOccasions' => $weightDetailOccasions,
+            'weightDetailFabricants' => $weightDetailFabricants,
+            'weightDetailAutres' => $weightDetailOthers,
+            'weightDetailTiers' => $weightDetailTiers,
         ]);
     }
 
@@ -52,20 +54,16 @@ class OrderController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Order $order, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Order $order, EntityManagerInterface $entityManager, WeightDetailRepository $weightDetailRepository, ObjectTypeRepository $objectTypeRepository): Response
     {
         $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
-        }
 
         return $this->render('order/edit.html.twig', [
             'order' => $order,
-            'form' => $form,
+            'weightDetailOccasions' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::occasions->value)]),
+            'weightDetailFabricants' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::fabricants->value)]),
+            'weightDetailAutres' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::autres->value)]),
+            'weightDetailTiers' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::tiers->value)]),
         ]);
     }
 

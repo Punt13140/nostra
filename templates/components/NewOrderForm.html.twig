@@ -3,67 +3,15 @@
             data-action="live#action"
             data-action-name="prevent|saveOrder"
     >
-        {#        <div class="row align-items-center"> #}
-        {#            <div class="col-2"> #}
-        {#                <label for="order-orderedAt">Date:</label> #}
-        {#            </div> #}
-        {#            <div class="col-3"> #}
-        {#                <input #}
-        {#                        type="date" #}
-        {#                        data-model="orderedAt" #}
-        {#                        class="form-control {{ _errors.has('orderedAt') ? 'is-invalid' }}" #}
-        {#                        id="order-orderedAt" #}
-        {#                > #}
-        {#                {% if _errors.has('orderedAt') %} #}
-        {#                    <div class="invalid-feedback"> #}
-        {#                        {{ _errors.get('orderedAt') }} #}
-        {#                    </div> #}
-        {#                {% endif %} #}
-        {#            </div> #}
-        {#        </div> #}
-
-
-        {#        <div class="mb-3"> #}
-        {#            <label class="form-label" for="order-client">Client</label> #}
-        {#            <div class="row align-items-center"> #}
-        {#                <div class="col-3"> #}
-        {#                    <select #}
-        {#                            data-model="client" #}
-        {#                            id="order-client" #}
-        {#                            class="form-control form-select {{ _errors.has('client') ? 'is-invalid' }}"> #}
-        {#                        <option value="">Choisir un client</option> #}
-        {#                        {% for clientOption in clients %} #}
-        {#                            <option value="{{ clientOption.id }}" {{ this.isCurrentClient(clientOption) ? 'selected' }}>{{ clientOption.fullName }}</option> #}
-        {#                        {% endfor %} #}
-        {#                    </select> #}
-        {#                </div> #}
-        {#                <div class="col-auto"> #}
-        {#                    <div class="form-text"> #}
-        {#                        <a #}
-        {#                                type="button" #}
-        {#                                data-bs-toggle="modal" #}
-        {#                                data-bs-target="#new-client-modal" #}
-        {#                        >+ Nouveau client #}
-        {#                        </a> #}
-        {#                    </div> #}
-        {#                </div> #}
-        {#            </div> #}
-        {#            {% if _errors.has('client') %} #}
-        {#                <div class="invalid-feedback"> #}
-        {#                    {{ _errors.get('client') }} #}
-        {#                </div> #}
-        {#            {% endif %} #}
-        {#        </div> #}
-
         <div class="row g-3align-items-center mb-3">
             <div class="col-auto">
-                <label class="col-form-label" for="order-client">Client</label>
+                <label class="col-form-label" for="order-orderedBy">Client</label>
             </div>
             <div class="col-auto">
                 <select
-                        data-model="client"
-                        id="order-client"
-                        class="form-control form-select {{ _errors.has('client') ? 'is-invalid' }}">
+                        data-model="orderedBy"
+                        id="order-orderedBy"
+                        class="form-control form-select {{ _errors.has('orderedBy') ? 'is-invalid' }}">
                     <option value="">Choisir un client</option>
                     {% for clientOption in clients %}
                         <option value="{{ clientOption.id }}" {{ this.isCurrentClient(clientOption) ? 'selected' }}>{{ clientOption.fullName }}</option>
@@ -87,7 +35,7 @@
             <textarea
                     class="form-control"
                     id="order-designation"
-                    data-model="designation"
+                    data-model="order.designation"
                     name="designation"
                     rows="5">
                 </textarea>
@@ -105,7 +53,7 @@
             <div class="col-auto">
                 <input
                         type="number"
-                        data-model="itemCount"
+                        data-model="order.itemCount"
                         class="form-control {{ _errors.has('itemCount') ? 'is-invalid' }}"
                         id="order-itemCount"
                 >
@@ -124,7 +72,7 @@
             <div class="col-auto">
                 <input
                         type="number"
-                        data-model="refId"
+                        data-model="order.refId"
                         class="form-control {{ _errors.has('refId') ? 'is-invalid' }}"
                         id="order-refId"
                 >
@@ -135,6 +83,316 @@
                 {% endif %}
             </div>
         </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                Objets achetés aux fabricants
+            </div>
+            <div class="card-body">
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailFabricants-platinum" class="col-form-label">Platine</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailFabricants.platinum"
+                                    class="form-control {{ _errors.has('weightDetailFabricants.platinum') ? 'is-invalid' }}"
+                                    id="order-weightDetailFabricants-platinum"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+
+                        {% if _errors.has('weightDetailFabricants.platinum') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailFabricants.platinum') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailFabricants-gold" class="col-form-label">Or</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailFabricants.gold"
+                                    class="form-control {{ _errors.has('weightDetailFabricants.gold') ? 'is-invalid' }}"
+                                    id="order-weightDetailFabricants-gold"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailFabricants.gold') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailFabricants.gold') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailFabricants-silver" class="col-form-label">Argent</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailFabricants.silver"
+                                    class="form-control {{ _errors.has('weightDetailFabricants.silver') ? 'is-invalid' }}"
+                                    id="order-weightDetailFabricants-silver"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailFabricants.silver') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailFabricants.silver') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                Objets d'occasion achetés à des particuliers
+            </div>
+            <div class="card-body">
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailOccasions-platinum" class="col-form-label">Platine</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailOccasions.platinum"
+                                    class="form-control {{ _errors.has('weightDetailOccasions.platinum') ? 'is-invalid' }}"
+                                    id="order-weightDetailOccasions-platinum"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+
+                        {% if _errors.has('weightDetailOccasions.platinum') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailOccasions.platinum') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailOccasions-gold" class="col-form-label">Or</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailOccasions.gold"
+                                    class="form-control {{ _errors.has('weightDetailOccasions.gold') ? 'is-invalid' }}"
+                                    id="order-weightDetailOccasions-gold"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailOccasions.gold') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailOccasions.gold') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailOccasions-silver" class="col-form-label">Argent</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailOccasions.silver"
+                                    class="form-control {{ _errors.has('weightDetailOccasions.silver') ? 'is-invalid' }}"
+                                    id="order-weightDetailOccasions-silver"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailOccasions.silver') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailOccasions.silver') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                Autres achats
+            </div>
+            <div class="card-body">
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailOthers-platinum" class="col-form-label">Platine</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailOthers.platinum"
+                                    class="form-control {{ _errors.has('weightDetailOthers.platinum') ? 'is-invalid' }}"
+                                    id="order-weightDetailOthers-platinum"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+
+                        {% if _errors.has('weightDetailOthers.platinum') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailOthers.platinum') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailOthers-gold" class="col-form-label">Or</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailOthers.gold"
+                                    class="form-control {{ _errors.has('weightDetailOthers.gold') ? 'is-invalid' }}"
+                                    id="order-weightDetailOthers-gold"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailOthers.gold') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailOthers.gold') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailOthers-silver" class="col-form-label">Argent</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailOthers.silver"
+                                    class="form-control {{ _errors.has('weightDetailOthers.silver') ? 'is-invalid' }}"
+                                    id="order-weightDetailOthers-silver"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailOthers.silver') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailOthers.silver') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header">
+                Objets confiés par des tiers
+            </div>
+            <div class="card-body">
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailTiers-platinum" class="col-form-label">Platine</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailTiers.platinum"
+                                    class="form-control {{ _errors.has('weightDetailTiers.platinum') ? 'is-invalid' }}"
+                                    id="order-weightDetailTiers-platinum"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+
+                        {% if _errors.has('weightDetailTiers.platinum') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailTiers.platinum') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailTiers-gold" class="col-form-label">Or</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailTiers.gold"
+                                    class="form-control {{ _errors.has('weightDetailTiers.gold') ? 'is-invalid' }}"
+                                    id="order-weightDetailTiers-gold"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailTiers.gold') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailTiers.gold') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-2">
+                        <label for="order-weightDetailTiers-silver" class="col-form-label">Argent</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <input
+                                    type="number" step=0.01
+                                    data-model="weightDetailTiers.silver"
+                                    class="form-control {{ _errors.has('weightDetailTiers.silver') ? 'is-invalid' }}"
+                                    id="order-weightDetailTiers-silver"
+                            >
+                            <span class="input-group-text">g</span>
+                        </div>
+                        {% if _errors.has('weightDetailTiers.silver') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('weightDetailTiers.silver') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
         <div class="mt-3">
             <button type="submit" class="btn btn-primary">Valider</button>
         </div>

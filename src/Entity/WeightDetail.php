@@ -30,8 +30,17 @@ class WeightDetail
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $refOrder = null;
 
+    // @todo à supprimer
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $deliveredAt = null;
+
+    public function __construct()
+    {
+        $this->gold = 0;
+        $this->platinum = 0;
+        $this->silver = 0;
+    }
+
 
     public function getId(): ?int
     {
