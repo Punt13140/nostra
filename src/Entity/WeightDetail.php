@@ -30,10 +30,6 @@ class WeightDetail
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $refOrder = null;
 
-    // @todo à supprimer
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $deliveredAt = null;
-
     public function __construct()
     {
         $this->gold = 0;
@@ -103,18 +99,6 @@ class WeightDetail
     public function setRefOrder(?Order $refOrder): static
     {
         $this->refOrder = $refOrder;
-
-        return $this;
-    }
-
-    public function getDeliveredAt(): ?\DateTimeImmutable
-    {
-        return $this->deliveredAt;
-    }
-
-    public function setDeliveredAt(?\DateTimeImmutable $deliveredAt): static
-    {
-        $this->deliveredAt = $deliveredAt;
 
         return $this;
     }
