@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,15 +34,28 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?int $refId = null;
 
-    #[ORM\OneToMany(mappedBy: 'refOrder', targetEntity: WeightDetail::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $weightDetails;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $exitedAt = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WeightDetail $weightDetailFabricants = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WeightDetail $weightDetailOccasion = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WeightDetail $weightDetailOthers = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WeightDetail $weightDetailTiers = null;
+
     public function __construct()
     {
-        $this->weightDetails = new ArrayCollection();
         $this->observation = '';
     }
 
@@ -113,36 +124,6 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection<int, WeightDetail>
-     */
-    public function getWeightDetails(): Collection
-    {
-        return $this->weightDetails;
-    }
-
-    public function addWeightDetail(WeightDetail $weightDetail): static
-    {
-        if (!$this->weightDetails->contains($weightDetail)) {
-            $this->weightDetails->add($weightDetail);
-            $weightDetail->setRefOrder($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWeightDetail(WeightDetail $weightDetail): static
-    {
-        if ($this->weightDetails->removeElement($weightDetail)) {
-            // set the owning side to null (unless already changed)
-            if ($weightDetail->getRefOrder() === $this) {
-                $weightDetail->setRefOrder(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getExitedAt(): ?\DateTimeImmutable
     {
         return $this->exitedAt;
@@ -163,6 +144,54 @@ class Order
     public function setOrderedAt(\DateTimeImmutable $orderedAt): static
     {
         $this->orderedAt = $orderedAt;
+
+        return $this;
+    }
+
+    public function getWeightDetailFabricants(): ?WeightDetail
+    {
+        return $this->weightDetailFabricants;
+    }
+
+    public function setWeightDetailFabricants(WeightDetail $weightDetailFabricants): static
+    {
+        $this->weightDetailFabricants = $weightDetailFabricants;
+
+        return $this;
+    }
+
+    public function getWeightDetailOccasion(): ?WeightDetail
+    {
+        return $this->weightDetailOccasion;
+    }
+
+    public function setWeightDetailOccasion(WeightDetail $weightDetailOccasion): static
+    {
+        $this->weightDetailOccasion = $weightDetailOccasion;
+
+        return $this;
+    }
+
+    public function getWeightDetailOthers(): ?WeightDetail
+    {
+        return $this->weightDetailOthers;
+    }
+
+    public function setWeightDetailOthers(WeightDetail $weightDetailOthers): static
+    {
+        $this->weightDetailOthers = $weightDetailOthers;
+
+        return $this;
+    }
+
+    public function getWeightDetailTiers(): ?WeightDetail
+    {
+        return $this->weightDetailTiers;
+    }
+
+    public function setWeightDetailTiers(WeightDetail $weightDetailTiers): static
+    {
+        $this->weightDetailTiers = $weightDetailTiers;
 
         return $this;
     }

@@ -26,9 +26,8 @@ class WeightDetail
     #[ORM\JoinColumn(nullable: false)]
     private ?ObjectType $type = null;
 
-    #[ORM\ManyToOne(inversedBy: 'weightDetails')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Order $refOrder = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $deliveredAt = null;
 
     public function __construct()
     {
@@ -91,14 +90,14 @@ class WeightDetail
         return $this;
     }
 
-    public function getRefOrder(): ?Order
+    public function getDeliveredAt(): ?\DateTimeImmutable
     {
-        return $this->refOrder;
+        return $this->deliveredAt;
     }
 
-    public function setRefOrder(?Order $refOrder): static
+    public function setDeliveredAt(?\DateTimeImmutable $deliveredAt): static
     {
-        $this->refOrder = $refOrder;
+        $this->deliveredAt = $deliveredAt;
 
         return $this;
     }

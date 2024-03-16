@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Config\Type;
 use App\Entity\Order;
 use App\Entity\WeightDetail;
-use App\Form\OrderType;
 use App\Repository\ObjectTypeRepository;
 use App\Repository\OrderRepository;
 use App\Repository\WeightDetailRepository;
@@ -56,14 +54,8 @@ class OrderController extends AbstractController
     #[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Order $order, EntityManagerInterface $entityManager, WeightDetailRepository $weightDetailRepository, ObjectTypeRepository $objectTypeRepository): Response
     {
-        $form = $this->createForm(OrderType::class, $order);
-
         return $this->render('order/edit.html.twig', [
             'order' => $order,
-            'weightDetailOccasions' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::occasions->value)]),
-            'weightDetailFabricants' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::fabricants->value)]),
-            'weightDetailAutres' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::autres->value)]),
-            'weightDetailTiers' => $weightDetailRepository->findOneBy(['refOrder' => $order->getId(), 'type' => $objectTypeRepository->find(Type::tiers->value)]),
         ]);
     }
 

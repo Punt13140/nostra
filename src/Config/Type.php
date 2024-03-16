@@ -4,8 +4,8 @@ namespace App\Config;
 
 enum Type: int
 {
-    case occasions = 5;
-    case fabricants = 6;
-    case autres = 7;
-    case tiers = 8;
+    case occasions = 9;
+    case fabricants = 10;
+    case autres = 11;
+    case tiers = 12;
 }

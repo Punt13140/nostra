@@ -3,11 +3,8 @@
 {% block title %}Edit Order{% endblock %}
 
 {% block body %}
-    <h1>Edit Order</h1>
+    <h1>Commande #{{ order.id }}</h1>
 
     {{ include('order/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_order_index') }}">back to list</a>
-
-    {{ include('order/_delete_form.html.twig') }}
 {% endblock %}

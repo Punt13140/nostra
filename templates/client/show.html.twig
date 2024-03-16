@@ -3,32 +3,15 @@
 {% block title %}Client{% endblock %}
 
 {% block body %}
-    <h1>Client</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ client.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ client.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ client.prenom }}</td>
-            </tr>
-            <tr>
-                <th>NationaleId</th>
-                <td>{{ client.nationaleId }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <h1 class="card-header">Fiche client</h1>
+        <div class="card-body">
+            <strong>Nom : </strong> {{ client.nom }}<br>
+            <strong>Prénom : </strong> {{ client.prenom }}<br>
+            <strong>N° identité : </strong> {{ client.nationaleId }}<br>
+            <strong>Nombre de commandes : </strong> {{ client.orders|length }}<br>
+        </div>
+    </div>
 
-    <a href="{{ path('app_client_index') }}">back to list</a>
-
-    <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-
-    {{ include('client/_delete_form.html.twig') }}
 {% endblock %}

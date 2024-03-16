@@ -40,6 +40,9 @@ final class NewOrderForm extends AbstractController
     public ?string $exitedAt = null;
 
     #[LiveProp(writable: true)]
+    public ?string $tiersDeliveredAt = null;
+
+    #[LiveProp(writable: true)]
     #[NotBlank]
     public ?Client $orderedBy;
 
@@ -103,13 +106,22 @@ final class NewOrderForm extends AbstractController
             }
         }
 
+        if ($this->tiersDeliveredAt != null) {
+            $date = \DateTimeImmutable::createFromFormat('Y-m-d', $this->tiersDeliveredAt);
+            if ($date) {
+                $this->weightDetailTiers->setDeliveredAt($date);
+            }
+        }
+
         if ($this->order->getId() == null) {
             $this->order->setOrderedBy($this->orderedBy);
-            $this->order->addWeightDetail($this->weightDetailOccasions);
-            $this->order->addWeightDetail($this->weightDetailTiers);
-            $this->order->addWeightDetail($this->weightDetailOthers);
-            $this->order->addWeightDetail($this->weightDetailFabricants);
+            $this->order->setWeightDetailOccasion($this->weightDetailOccasions);
+            $this->order->setWeightDetailTiers($this->weightDetailTiers);
+            $this->order->setWeightDetailOthers($this->weightDetailOthers);
+            $this->order->setWeightDetailFabricants($this->weightDetailFabricants);
         }
+
+        $entityManager->flush();
 
         $entityManager->persist($this->order);
         $entityManager->flush();

@@ -1,9 +1,10 @@
 <twig:NewOrderForm
         order="{{ order }}"
         orderedBy="{{ order.orderedBy }}"
-        weightDetailFabricants="{{ weightDetailFabricants }}"
-        weightDetailOccasions="{{ weightDetailOccasions }}"
-        weightDetailOthers="{{ weightDetailAutres }}"
-        weightDetailTiers="{{ weightDetailTiers }}"
+        weightDetailFabricants="{{ order.weightDetailFabricants ?? weightDetailFabricants }}"
+        weightDetailOccasions="{{ order.weightDetailOccasion ?? weightDetailOccasions }}"
+        weightDetailOthers="{{ order.weightDetailOthers ?? weightDetailAutres }}"
+        weightDetailTiers="{{ order.weightDetailTiers ?? weightDetailTiers }}"
         exitedAt="{{ order.exitedAt ? order.exitedAt.format('Y-m-d') : null }}"
+        tiersDeliveredAt="{{ order.weightDetailTiers.deliveredAt ? order.weightDetailTiers.deliveredAt.format('Y-m-d') : null }}"
 />

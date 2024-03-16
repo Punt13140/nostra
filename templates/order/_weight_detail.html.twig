@@ -1,0 +1,6 @@
+<strong>Platine : </strong> {{ wd.platinum }} g<br>
+<strong>Or : </strong> {{ wd.gold }} g<br>
+<strong>Argent : </strong> {{ wd.silver }} g<br>
+{% if wd.deliveredAt is not null %}
+    <strong>Date de la remise : </strong> {{ wd.deliveredAt|date('d/m/Y') }}<br>
+{% endif %}

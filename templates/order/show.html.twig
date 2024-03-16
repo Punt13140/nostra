@@ -3,44 +3,48 @@
 {% block title %}Order{% endblock %}
 
 {% block body %}
-    <h1>Order</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ order.id }}</td>
-            </tr>
-            <tr>
-                <th>OrderedAt</th>
-                <td>{{ order.orderedAt ? order.orderedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Designation</th>
-                <td>{{ order.designation }}</td>
-            </tr>
-            <tr>
-                <th>ItemCount</th>
-                <td>{{ order.itemCount }}</td>
-            </tr>
-            <tr>
-                <th>Observation</th>
-                <td>{{ order.observation }}</td>
-            </tr>
-            <tr>
-                <th>RefId</th>
-                <td>{{ order.refId }}</td>
-            </tr>
-            <tr>
-                <th>ExitedAt</th>
-                <td>{{ order.exitedAt ? order.exitedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-header">Commande #{{ order.id }}</div>
+        <div class="card-body">
+            Commande passée le {{ order.orderedAt ? order.orderedAt|date('d/m/Y') : '' }}<br>
+            par <a href="{{ path('app_client_show', {'id': order.orderedBy.id}) }}">
+                {{ order.orderedBy.fullName }}
+            </a><br><br>
+            <strong>Désignation des objets : </strong><br>
+            {{ order.designation }}<br>
+            <strong>Nombre d'objets : </strong> {{ order.itemCount }}<br>
+            <strong>Date de sortie : </strong>{{ order.exitedAt ? order.exitedAt|date('d/m/Y') : 'Non définie' }}
+            <br><br>
 
-    <a href="{{ path('app_order_index') }}">back to list</a>
+            <div class="card mb-2">
+                <div class="card-header">Objets achetés aux fabricants</div>
+                <div class="card-body">
+                    {% include 'order/_weight_detail.html.twig' with {'wd': order.weightDetailFabricants} %}
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-header">Objets d'occasion achetés à des particuliers</div>
+                <div class="card-body">
+                    {% include 'order/_weight_detail.html.twig' with {'wd': order.weightDetailOccasion} %}
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-header">Autres achats</div>
+                <div class="card-body">
+                    {% include 'order/_weight_detail.html.twig' with {'wd': order.weightDetailOthers} %}
+                </div>
+            </div>
+            <div class="card mb-2">
+                <div class="card-header">Objets confiés par des tiers</div>
+                <div class="card-body">
+                    {% include 'order/_weight_detail.html.twig' with {'wd': order.weightDetailTiers} %}
+                </div>
+            </div>
 
-    <a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
+            <a class="btn btn-primary my-2" href="{{ path('app_order_edit', {'id': order.id}) }}">Modifier</a>
 
-    {{ include('order/_delete_form.html.twig') }}
+            {{ include('order/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

@@ -415,6 +415,28 @@
                 </div>
 
 
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-auto">
+                        <label for="order-weightDetailTiers-deliveredAt" class="col-form-label">
+                            Date de la remise
+                        </label>
+                    </div>
+                    <div class="col-auto">
+                        <input
+                                data-model="tiersDeliveredAt"
+                                type="date"
+                                class="form-control {{ _errors.has('tiersDeliveredAt') ? 'is-invalid' }}"
+                                id="order-weightDetailTiers-deliveredAt"
+                        >
+                        {% if _errors.has('tiersDeliveredAt') %}
+                            <div class="invalid-feedback">
+                                {{ _errors.get('tiersDeliveredAt') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
             </div>
         </div>
 

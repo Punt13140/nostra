@@ -50,12 +50,24 @@ class AppFixtures extends Fixture
                 $order->setDesignation('Boucle + bague + ...');
                 $order->setItemCount($faker->numberBetween(1, 10));
 
-                $detail = new WeightDetail();
-                $detail->setType($occas);
-                $detail->setGold($faker->numberBetween(1, 150));
-                $detail->setSilver($faker->numberBetween(1, 100));
+                $detailOccasion = new WeightDetail();
+                $detailOccasion->setType($occas);
+                $detailOccasion->setGold($faker->numberBetween(1, 150));
+                $detailOccasion->setSilver($faker->numberBetween(1, 100));
 
-                $order->addWeightDetail($detail);
+                $order->setWeightDetailOccasion($detailOccasion);
+
+                $detailFabricants = new WeightDetail();
+                $detailFabricants->setType($fabricants);
+                $order->setWeightDetailFabricants($detailFabricants);
+
+                $detailOthers = new WeightDetail();
+                $detailOthers->setType($others);
+                $order->setWeightDetailOthers($detailOthers);
+
+                $detailTiers = new WeightDetail();
+                $detailTiers->setType($tiers);
+                $order->setWeightDetailTiers($detailTiers);
 
                 $manager->persist($order);
             }
