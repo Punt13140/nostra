@@ -76,7 +76,7 @@ final class NewOrderForm extends AbstractController
         $this->validate();
 
         $this->order->setOrderedAt(\DateTimeImmutable::createFromMutable(new \DateTime()));
-        $this->order->setOrderedBy($this->orderedBy);
+
 
         if ($this->weightDetailOccasions->getType() == null) {
             $this->weightDetailOccasions->setType($objectTypeRepository->find(Type::occasions));
@@ -94,10 +94,13 @@ final class NewOrderForm extends AbstractController
             $this->weightDetailFabricants->setType($objectTypeRepository->find(Type::fabricants));
         }
 
-        $this->order->addWeightDetail($this->weightDetailOccasions);
-        $this->order->addWeightDetail($this->weightDetailTiers);
-        $this->order->addWeightDetail($this->weightDetailOthers);
-        $this->order->addWeightDetail($this->weightDetailFabricants);
+        if ($this->order->getId() == null) {
+            $this->order->setOrderedBy($this->orderedBy);
+            $this->order->addWeightDetail($this->weightDetailOccasions);
+            $this->order->addWeightDetail($this->weightDetailTiers);
+            $this->order->addWeightDetail($this->weightDetailOthers);
+            $this->order->addWeightDetail($this->weightDetailFabricants);
+        }
 
         $entityManager->persist($this->order);
         $entityManager->flush();

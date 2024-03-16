@@ -3,31 +3,37 @@
             data-action="live#action"
             data-action-name="prevent|saveOrder"
     >
-        <div class="row g-3align-items-center mb-3">
+        <div class="row g-3 align-items-center mb-3">
             <div class="col-auto">
                 <label class="col-form-label" for="order-orderedBy">Client</label>
             </div>
-            <div class="col-auto">
-                <select
-                        data-model="orderedBy"
-                        id="order-orderedBy"
-                        class="form-control form-select {{ _errors.has('orderedBy') ? 'is-invalid' }}">
-                    <option value="">Choisir un client</option>
-                    {% for clientOption in clients %}
-                        <option value="{{ clientOption.id }}" {{ this.isCurrentClient(clientOption) ? 'selected' }}>{{ clientOption.fullName }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-auto">
-                <div class="form-text">
-                    <a
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#new-client-modal"
-                    >+ Nouveau client
-                    </a>
+            {% if order is defined and order.id is not null and orderedBy is defined %}
+                <div class="col-auto">
+                    {{ orderedBy.fullName }}
                 </div>
-            </div>
+            {% else %}
+                <div class="col-auto">
+                    <select
+                            data-model="orderedBy"
+                            id="order-orderedBy"
+                            class="form-control form-select {{ _errors.has('orderedBy') ? 'is-invalid' }}">
+                        <option value="">Choisir un client</option>
+                        {% for clientOption in clients %}
+                            <option value="{{ clientOption.id }}" {{ this.isCurrentClient(clientOption) ? 'selected' }}>{{ clientOption.fullName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <div class="form-text">
+                        <a
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#new-client-modal"
+                        >+ Nouveau client
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
         <div class="mb-3">
