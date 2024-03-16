@@ -90,6 +90,25 @@
             </div>
         </div>
 
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-auto">
+                <label for="order-exitedAt" class="col-form-label">Date de sortie</label>
+            </div>
+            <div class="col-auto">
+                <input
+                        data-model="exitedAt"
+                        type="date"
+                        class="form-control {{ _errors.has('exitedAt') ? 'is-invalid' }}"
+                        id="order-exitedAt"
+                >
+                {% if _errors.has('exitedAt') %}
+                    <div class="invalid-feedback">
+                        {{ _errors.get('exitedAt') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
         <div class="card mb-2">
             <div class="card-header">
                 Objets achetés aux fabricants

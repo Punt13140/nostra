@@ -37,6 +37,9 @@ final class NewOrderForm extends AbstractController
     public ?Order $order;
 
     #[LiveProp(writable: true)]
+    public ?string $exitedAt = null;
+
+    #[LiveProp(writable: true)]
     #[NotBlank]
     public ?Client $orderedBy;
 
@@ -77,7 +80,6 @@ final class NewOrderForm extends AbstractController
 
         $this->order->setOrderedAt(\DateTimeImmutable::createFromMutable(new \DateTime()));
 
-
         if ($this->weightDetailOccasions->getType() == null) {
             $this->weightDetailOccasions->setType($objectTypeRepository->find(Type::occasions));
         }
@@ -92,6 +94,13 @@ final class NewOrderForm extends AbstractController
 
         if ($this->weightDetailFabricants->getType() == null) {
             $this->weightDetailFabricants->setType($objectTypeRepository->find(Type::fabricants));
+        }
+
+        if ($this->exitedAt != null) {
+            $date = \DateTimeImmutable::createFromFormat('Y-m-d', $this->exitedAt);
+            if ($date) {
+                $this->order->setExitedAt($date);
+            }
         }
 
         if ($this->order->getId() == null) {
